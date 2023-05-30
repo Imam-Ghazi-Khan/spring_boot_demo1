@@ -4,7 +4,7 @@
     <title>Spring Boot API Example</title>
     <script>
         function fetchData() {
-            fetch('http://localhost:8080/data')
+            fetch('https://sedate-volcano-production.up.railway.app//data')
                 .then(response => response.json())
                 .then(data => {
                     var tableBody = document.getElementById('data-table-body');
@@ -28,7 +28,7 @@
                 name: name
             };
 
-            fetch('http://localhost:8080/data', {
+            fetch('https://sedate-volcano-production.up.railway.app/data', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
