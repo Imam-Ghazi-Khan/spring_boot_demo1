@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Spring Boot API Example</title>
+    <script>
+        function fetchData() {
+            fetch('http://localhost:8080/data')
+                .then(response => response.json())
+                .then(data => {
+                    var tableBody = document.getElementById('data-table-body');
+                    tableBody.innerHTML = '';
+
+                    data.forEach(entity => {
+                        var row = document.createElement('tr');
+                        var nameCell = document.createElement('td');
+                        nameCell.textContent = entity.name;
+
+                        row.appendChild(nameCell);
+                        tableBody.appendChild(row);
+                    });
+                });
+        }
+
+        function addData() {
+            var name = document.getElementById('name-input').value;
+
+            var entity = {
+                name: name
+            };
+
+            fetch('http://localhost:8080/data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(entity)
+            })
+            .then(response => response.json())
+            .then(data => {
+                fetchData();
+                document.getElementById('name-input').value = '';
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchData();
+        });
+    </script>
+</head>
+<body>
+    <h1>Spring Boot API Example</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody id="data-table-body"></tbody>
+    </table>
+
+    <div>
+        <input type="text" id="name-input" placeholder="Enter name">
+        <button onclick="addData()">Add Data</button>
+    </div>
+</body>
+</html>
